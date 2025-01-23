@@ -1,1 +1,89 @@
+#include <iostream>
+#include <string>
 
+class Book {
+private:
+    std::string title;      // имя  книги
+    int pageCount;         // скока страниц 
+    std::string author;    // автор книги
+    std::string isbn;      // номерочек книги
+
+public:
+    // 1 тут у меня конструктор по умолчанию 
+    Book() : title(""), pageCount(0), author(""), isbn("") {}
+    // этот конструктор по умолчанию создаст книгу без названия и без странникц
+
+    // 2 конструктор с параметрами
+    Book(const std::string& title, int pageCount, const std::string& author, const std::string& isbn)
+        : title(title), pageCount(pageCount), author(author), isbn(isbn) {}
+    //это позволит мне создать книгу с заданным именем  количеством страниц и автором и номером книги
+
+    // 3 конструктор копирования
+    Book(const Book& other)
+        : title(other.title), pageCount(other.pageCount), author(other.author), isbn(other.isbn) {}
+    // ну тут просто этот конструктор просто создает полную копию Book
+
+    // 4 конструктор преобразования
+    Book(int pageCount) : title(""), pageCount(pageCount), author(""), isbn("") {}
+    // этот конструктор создаст объект Book используя количество страниц и оставляя название пустым
+
+
+    // сеттеры это если что для установки значений полей
+    void setTitle(const std::string& title) { this->title = title; }
+    void setPageCount(int pageCount) { this->pageCount = pageCount; }
+    void setAuthor(const std::string& author) {this->author = author;}
+    void setIsbn(const std::string& isbn){ this->isbn = isbn;}
+
+    // геттеры для получения значений полей ну в принципе они не обязательны но полезны
+    std::string getTitle() const { return title; }
+    int getPageCount() const { return pageCount; }
+    std::string getAuthor() const { return author; }
+    std::string getIsbn() const {return isbn;}
+
+    // метод для вывода информации о книге
+    void printBookInfo() const {
+        std::cout << "Title: " << title << std::endl;
+        std::cout << "Author: " << author << std::endl;
+        std::cout << "Page Count: " << pageCount << std::endl;
+        std::cout << "ISBN: " << isbn << std::endl;
+        std::cout << std::endl;
+    }
+};
+
+int main() {
+    // 1 тестирование конструктора по умолчанию
+    std::cout << "Конструктор по умолчанию:" << std::endl;
+    Book book1;
+    book1.printBookInfo();
+
+
+    // 2 тестирование конструктора с параметрами
+    std::cout << "конструктор с параметрами:" << std::endl;
+    Book book2("hello worde", 224, "aMIR mAMKIN", "978-0345391803");
+    book2.printBookInfo();
+
+
+    // 3 тестирование конструктора копирования
+    std::cout << "конструктор копирования:" << std::endl;
+    Book book3 = book2; // вызов конструктора копирования
+    book3.printBookInfo();
+
+     // 4 изменение book2 не должно затронуть book3
+    book2.setTitle("New Title");
+    std::cout << "book2 after change title" << std::endl;
+    book2.printBookInfo();
+    std::cout << "book3 after book2 change title" << std::endl;
+    book3.printBookInfo();
+
+
+    // 5 тестирование конструктора преобразования
+    std::cout << "конструктор преобразования:" << std::endl;
+    Book book4 = 350; // вызов конструктора преобразования
+    book4.setTitle("ychim c++"); //добавим название книги
+    book4.setAuthor("Amir Mamkin"); // добавим автора
+    book4.setIsbn("978-0-000-0000-0");// добавим номер кнгиги
+    book4.printBookInfo();
+
+
+    return 0;
+}
